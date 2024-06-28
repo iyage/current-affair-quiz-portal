@@ -32,6 +32,7 @@ function Login() {
       });
     },
     onError: (err: AxiosError) => {
+      alert("invalid credentials");
       console.log(err);
     },
   });
