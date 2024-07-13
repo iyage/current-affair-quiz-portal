@@ -1,9 +1,4 @@
-.quiz-container {
-  width: 100vw;
-  height: 100vh;
-}
 .wrapper {
-  width: 80%;
   margin: auto;
   padding-top: 10px;
 }
@@ -11,14 +6,27 @@
   margin: auto;
   width: 700px;
   height: fit-content;
-  border: solid 1px green;
+  border: solid 1px #13111e;
   padding: 10px 20px;
 }
-.quiz-container form input {
-  width: 100%;
+.quiz-container form .form-input {
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
+
+.quiz-container form .form-input input[text] {
+  flex: 2;
+}
+.quiz-container form .form-input .radio {
+  height: 25px;
+  width: 25px;
+  cursor: pointer;
+}
+
 label {
   font-size: 14px;
+  white-space: nowrap;
 }
 .categories-container {
   margin: auto;

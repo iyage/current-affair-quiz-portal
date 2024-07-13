@@ -1,4 +1,3 @@
-import { Navigate } from "react-router-dom";
 import "./quiz-page.css";
 import { useMutation } from "react-query";
 import { QuesDto, createQuestion } from "../../utils/api";
@@ -7,7 +6,6 @@ import { UserInfoStore } from "../../utils/store";
 import { useState } from "react";
 
 function QuizPage() {
-  const isLogin = UserInfoStore.useState((s) => s.isLogin);
   const token = UserInfoStore.useState((s) => s.token);
   const [category, setCategory] = useState("");
   const { mutate } = useMutation(
@@ -27,14 +25,19 @@ function QuizPage() {
   function handleSubmit(e: any): void {
     e.preventDefault();
     const options = [];
-    for (let index = 2; index < e.target.length - 1; index++) {
-      options.push({ content: e.target[index].value });
+    let answer;
+    for (let index = 0; index < e.target["option"].length; index++) {
+      options.push(e.target["option"][index].value);
+    }
+
+    for (let index = 0; index < e.target["answer"].length; index++) {
+      if (e.target["answer"][index].checked === true) answer = index + 1;
     }
 
     const payload = {
-      content: e.target["question"].value,
+      question: e.target["question"].value,
       options,
-      answer: { content: e.target["answer"].value },
+      answer: answer,
       category: category,
     };
     console.log(payload);
@@ -44,9 +47,10 @@ function QuizPage() {
     }
   }
 
-  return isLogin ? (
+  return (
     <div className="quiz-container">
       <div className="wrapper">
+        <h1 style={{ textAlign: "center" }}>Add New Quiz</h1>
         {/* <Container className="mt-5">
           <Row className="justify-content-center">
             <Col sm={12} xs={12} md={6} xxl={6}>
@@ -80,10 +84,10 @@ function QuizPage() {
             <option value="" selected disabled>
               Categories
             </option>
+            <option value="current-affair">Current Affairs</option>
             <option value="politics">Politics</option>
             <option value="history">History</option>
-            <option value="biography">Biography</option>
-            <option value="bible">Bible Quiz/Church hisstory</option>
+            <option value="geography">Geography</option>
           </select>
         </div>
         <form onSubmit={handleSubmit} className="quiz-form">
@@ -92,23 +96,55 @@ function QuizPage() {
             <input type="text" required id="question" name="question" />
           </div>
           <div className="form-input">
-            <label htmlFor="ans">Answer</label>
-            <input type="text" required id="ans" name="answer" />
+            <label htmlFor="option" className="items">
+              Option-A
+            </label>
+            <input type="text" required id="option0" name="option" />
+            <input
+              type="radio"
+              name="answer"
+              id="ans1"
+              className="items radio"
+            />
           </div>
 
           <div className="form-input">
-            <label htmlFor="option1">Option-A</label>
-            <input type="text" required id="option1" name="option1" />
+            <label htmlFor="option1" className="items">
+              Option-B
+            </label>
+            <input type="text" required id="option1" name="option" />
+            <input
+              type="radio"
+              name="answer"
+              id="ans2"
+              className="items radio"
+            />
           </div>
 
           <div className="form-input">
-            <label htmlFor="option2">Option-B</label>
-            <input type="text" required id="option2" name="option2" />
+            <label htmlFor="option2" className="items">
+              Option-C
+            </label>
+            <input type="text" required id="option2" name="option" />
+            <input
+              type="radio"
+              name="answer"
+              id="ans3"
+              className="items radio"
+            />
           </div>
 
           <div className="form-input">
-            <label htmlFor="option3">option-C</label>
-            <input type="text" required id="option3" name="option3" />
+            <label htmlFor="option3" className="items">
+              option-D
+            </label>
+            <input type="text" required id="option3" name="option" />
+            <input
+              type="radio"
+              name="answer"
+              id="ans4"
+              className="items radio"
+            />
           </div>
           <div className="form-input">
             <button>Submit</button>
@@ -116,8 +152,6 @@ function QuizPage() {
         </form>
       </div>
     </div>
-  ) : (
-    <Navigate to={"/"} />
   );
 }
 

@@ -22,7 +22,6 @@ function Login() {
   const { mutate } = useMutation((variables: LoginDto) => login(variables), {
     onSuccess: (data: AxiosResponse) => {
       const resp: LoginResp = data.data;
-      console.log(resp);
       UserInfoStore.update((s) => {
         [
           (s.userInfo = resp.data.user),
@@ -43,7 +42,6 @@ function Login() {
       email: e.target[0].value,
       password: e.target[1].value,
     };
-    console.log(data);
     mutate(data);
   }
   return !isLogin ? (
@@ -73,7 +71,7 @@ function Login() {
       </div>
     </>
   ) : (
-    <Navigate to={"/quiz-page"} />
+    <Navigate to={"/pages"} />
   );
 }
 
