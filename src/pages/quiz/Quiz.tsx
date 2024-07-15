@@ -19,7 +19,7 @@ function Quiz() {
     const fetchQuiz = quizs.find((quiz) => {
       return quiz.id === params.id;
     });
-    setOpt(fetchQuiz?.answer);
+    setOpt(fetchQuiz?.data.answer);
     setQuiz(fetchQuiz);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -68,7 +68,7 @@ function Quiz() {
           <div className="form-input">
             <label htmlFor="question">Question</label>
             <input
-              value={quiz?.question}
+              value={quiz?.data?.question}
               type="text"
               required
               id="question"
@@ -83,18 +83,22 @@ function Quiz() {
             <select name="category" id="category" required>
               <option
                 value="current-affair"
-                selected={quiz?.category === "current-affair"}>
+                selected={quiz?.data.category === "current-affair"}>
                 Current Affairs
               </option>
-              <option value="politics" selected={quiz?.category === "politics"}>
+              <option
+                value="politics"
+                selected={quiz?.data.category === "politics"}>
                 Politics
               </option>
-              <option value="history" selected={quiz?.category === "history"}>
+              <option
+                value="history"
+                selected={quiz?.data.category === "history"}>
                 History
               </option>
               <option
                 value="geography"
-                selected={quiz?.category === "geography"}>
+                selected={quiz?.data.category === "geography"}>
                 Geography
               </option>
             </select>
@@ -107,7 +111,7 @@ function Quiz() {
               type="text"
               required
               id="option0"
-              value={quiz?.options[0]}
+              value={quiz?.data.options[0]}
               name="option"
             />
             <input
@@ -129,7 +133,7 @@ function Quiz() {
               required
               id="option1"
               name="option"
-              value={quiz?.options[1]}
+              value={quiz?.data.options[1]}
             />
             <input
               type="radio"
@@ -150,7 +154,7 @@ function Quiz() {
               required
               id="option2"
               name="option"
-              value={quiz?.options[2]}
+              value={quiz?.data.options[2]}
             />
             <input
               type="radio"
@@ -171,7 +175,7 @@ function Quiz() {
               required
               id="option3"
               name="option"
-              value={quiz?.options[3]}
+              value={quiz?.data?.options[3]}
             />
             <input
               type="radio"

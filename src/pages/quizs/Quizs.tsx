@@ -65,7 +65,7 @@ function Quizs() {
               return (
                 <tr key={quiz.id}>
                   <td>{index + 1}</td>
-                  <td>{quiz.question}</td>
+                  <td>{quiz.data.question}</td>
                   <td> {new Date().toISOString()}</td>
                   <td> {new Date().toISOString()}</td>
                   <td>
