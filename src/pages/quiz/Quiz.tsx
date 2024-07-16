@@ -5,7 +5,20 @@ import { QUIZ, UserInfoStore } from "../../utils/store";
 import "./quiz.css";
 import { useMutation } from "react-query";
 import { AxiosError, AxiosResponse } from "axios";
-import { QuesDto, updateQuestion } from "../../utils/api";
+import { updateQuestion } from "../../utils/api";
+export interface QUIZUPDATE {
+  id: string;
+  quiz: string;
+  optionA: string;
+  optionB: string;
+  optionC: string;
+  optionD: string;
+
+  answer: number | undefined;
+  category: string;
+  country: string;
+}
+const payload = {} as QUIZUPDATE;
 function Quiz() {
   const params = useParams();
   const [quiz, setQuiz] = useState<QUIZ | undefined>(undefined);
@@ -13,13 +26,22 @@ function Quiz() {
   const [opt, setOpt] = useState<any>(null);
   const quizs = UserInfoStore.useState((s) => s.quizs);
   const token = UserInfoStore.useState((s) => s.token);
-
+  const [ques, setQues] = useState<string | undefined>("");
+  const [optionA, setOptionA] = useState<string | undefined>("");
+  const [optionB, setOptionB] = useState<string | undefined>("");
+  const [optionC, setOptionC] = useState<string | undefined>("");
+  const [optionD, setOptionD] = useState<string | undefined>("");
   useEffect(() => {
     setId(params.id);
     const fetchQuiz = quizs.find((quiz) => {
-      return quiz.id === params.id;
+      return quiz.id == params.id;
     });
-    setOpt(fetchQuiz?.data.answer);
+    setQues(fetchQuiz?.quiz);
+    setOptionA(fetchQuiz?.options[0]);
+    setOptionB(fetchQuiz?.options[1]);
+    setOptionC(fetchQuiz?.options[2]);
+    setOptionD(fetchQuiz?.options[3]);
+    setOpt(fetchQuiz?.answer);
     setQuiz(fetchQuiz);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -37,18 +59,12 @@ function Quiz() {
       if (e.target["answer"][index].checked === true) answer = index + 1;
     }
 
-    const payload = {
-      question: e.target["question"].value,
-      options,
-      answer: answer,
-      category: e.target["category"].value,
-    };
-    console.log(payload);
+    payload.answer = answer;
     mutate(payload);
   }
 
   const { mutate } = useMutation(
-    (variables: QuesDto) => updateQuestion(variables, token, id),
+    (variables: QUIZUPDATE) => updateQuestion(variables, token, id),
     {
       onSuccess: (data: AxiosResponse) => {
         console.log(data);
@@ -68,7 +84,11 @@ function Quiz() {
           <div className="form-input">
             <label htmlFor="question">Question</label>
             <input
-              value={quiz?.data?.question}
+              onChange={(e) => {
+                payload.quiz = e.target.value;
+                setQues(e.target.value);
+              }}
+              value={ques}
               type="text"
               required
               id="question"
@@ -80,25 +100,27 @@ function Quiz() {
             <label htmlFor="categories" className="items">
               Categories
             </label>
-            <select name="category" id="category" required>
+            <select
+              name="category"
+              id="category"
+              required
+              onChange={(e) => {
+                payload.category = e.target.value;
+              }}>
               <option
                 value="current-affair"
-                selected={quiz?.data.category === "current-affair"}>
+                selected={quiz?.category === "current-affair"}>
                 Current Affairs
               </option>
-              <option
-                value="politics"
-                selected={quiz?.data.category === "politics"}>
+              <option value="politics" selected={quiz?.category === "politics"}>
                 Politics
               </option>
-              <option
-                value="history"
-                selected={quiz?.data.category === "history"}>
+              <option value="history" selected={quiz?.category === "history"}>
                 History
               </option>
               <option
                 value="geography"
-                selected={quiz?.data.category === "geography"}>
+                selected={quiz?.category === "geography"}>
                 Geography
               </option>
             </select>
@@ -108,10 +130,14 @@ function Quiz() {
               Option-A
             </label>
             <input
+              onChange={(e) => {
+                payload.optionA = e.target.value;
+                setOptionA(e.target.value);
+              }}
               type="text"
               required
               id="option0"
-              value={quiz?.data.options[0]}
+              value={optionA}
               name="option"
             />
             <input
@@ -129,11 +155,15 @@ function Quiz() {
               Option-B
             </label>
             <input
+              onChange={(e) => {
+                payload.optionB = e.target.value;
+                setOptionB(e.target.value);
+              }}
               type="text"
               required
               id="option1"
               name="option"
-              value={quiz?.data.options[1]}
+              value={optionB}
             />
             <input
               type="radio"
@@ -150,11 +180,15 @@ function Quiz() {
               Option-C
             </label>
             <input
+              onChange={(e) => {
+                payload.optionC = e.target.value;
+                setOptionC(e.target.value);
+              }}
               type="text"
               required
               id="option2"
               name="option"
-              value={quiz?.data.options[2]}
+              value={optionC}
             />
             <input
               type="radio"
@@ -171,11 +205,15 @@ function Quiz() {
               option-D
             </label>
             <input
+              onChange={(e) => {
+                payload.optionD = e.target.value;
+                setOptionD(e.target.value);
+              }}
               type="text"
               required
               id="option3"
               name="option"
-              value={quiz?.data?.options[3]}
+              value={optionD}
             />
             <input
               type="radio"

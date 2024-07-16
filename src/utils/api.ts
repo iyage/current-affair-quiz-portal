@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from "axios";
+import { QUIZUPDATE } from "../pages/quiz/Quiz";
 export interface LoginDto {
   email: string;
   password: string;
@@ -47,7 +48,7 @@ export const delQuiiz = async (
 };
 
 export const updateQuestion = async (
-  data: QuesDto,
+  data: QUIZUPDATE,
   token: string | undefined,
   id: string
 ): Promise<AxiosResponse> => {

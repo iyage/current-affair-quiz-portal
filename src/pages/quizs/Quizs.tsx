@@ -15,6 +15,7 @@ function Quizs() {
     refetchOnWindowFocus: false,
     onSuccess: (data: AxiosResponse) => {
       const resp = data.data;
+      console.log(resp);
       UserInfoStore.update((s) => {
         [(s.quizs = resp)];
       });
@@ -65,7 +66,7 @@ function Quizs() {
               return (
                 <tr key={quiz.id}>
                   <td>{index + 1}</td>
-                  <td>{quiz.data.question}</td>
+                  <td>{quiz.quiz}</td>
                   <td> {new Date().toISOString()}</td>
                   <td> {new Date().toISOString()}</td>
                   <td>

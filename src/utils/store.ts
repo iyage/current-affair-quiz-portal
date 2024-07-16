@@ -7,13 +7,11 @@ export interface User {
 }
 export interface QUIZ {
   id: string;
-  data: {
-    question: string;
-    options: string[];
-    answer: number;
-    category: string;
-    country: string;
-  };
+  quiz: string;
+  options: string[];
+  answer: number;
+  category: string;
+  country: string;
 }
 
 export const UserInfoStore = new Store({
