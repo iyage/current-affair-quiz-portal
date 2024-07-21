@@ -5,12 +5,14 @@ import QuizPage from "./pages/quiz-page/QuizPage";
 import Page from "./pages/page/Page";
 import Quizs from "./pages/quizs/Quizs";
 import Quiz from "./pages/quiz/Quiz";
+import PrivacyPolicy from "./privacy-policy/PrivacyPolicy";
 
 function App() {
   return (
     <>
       <Routes>
         <Route path="/" element={<Login />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/pages" element={<Page />}>
           <Route index element={<QuizPage />} />
           <Route path="/pages/quizs" element={<Quizs />} />

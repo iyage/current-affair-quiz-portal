@@ -1,0 +1,7 @@
+.privacy-container {
+  margin: auto;
+  max-width: 90%;
+}
+.privacy-container ul {
+  list-style: circle;
+}
