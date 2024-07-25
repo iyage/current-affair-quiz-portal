@@ -40,10 +40,12 @@ function QuizPage() {
       answer: answer,
       category: category,
     };
-    console.log(payload);
     mutate(payload);
     for (let index = 0; index < e.target.length - 1; index++) {
       e.target[index].value = "";
+    }
+    for (let index = 0; index < e.target["answer"].length; index++) {
+      e.target["answer"][index].checked = false;
     }
   }
 
