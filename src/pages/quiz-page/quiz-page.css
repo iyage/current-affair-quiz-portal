@@ -41,3 +41,11 @@ label {
   height: 40px;
   padding: 10px 20px;
 }
+textarea {
+  width: 100%;
+  padding: 10px 20px;
+}
+.char-limit {
+  text-align: end;
+  display: block;
+}

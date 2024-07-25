@@ -7,6 +7,7 @@ import { useState } from "react";
 
 function QuizPage() {
   const token = UserInfoStore.useState((s) => s.token);
+  const [charCount, setCharCount] = useState(0);
   const [category, setCategory] = useState("");
   const { mutate } = useMutation(
     (variables: QuesDto) => createQuestion(variables, token),
@@ -39,7 +40,9 @@ function QuizPage() {
       options,
       answer: answer,
       category: category,
+      solution: e.target["solution"].value,
     };
+    console.log(payload);
     mutate(payload);
     for (let index = 0; index < e.target.length - 1; index++) {
       e.target[index].value = "";
@@ -150,6 +153,20 @@ function QuizPage() {
               className="items radio"
             />
           </div>
+
+          <div className="solution-container">
+            <textarea
+              onChange={(e) => setCharCount(e.target.value.length)}
+              name="solution"
+              id="solution"
+              rows={10}
+              required
+              placeholder="Enter solution to question here"></textarea>
+            <label htmlFor="option3" className="char-limit">
+              {charCount}/800
+            </label>
+          </div>
+
           <div className="form-input">
             <button>Submit</button>
           </div>
