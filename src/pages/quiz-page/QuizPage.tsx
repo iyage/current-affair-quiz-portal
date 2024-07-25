@@ -88,6 +88,8 @@ function QuizPage() {
             <option value="politics">Politics</option>
             <option value="history">History</option>
             <option value="geography">Geography</option>
+            <option value="entertainment">Entertainment</option>
+            <option value="general-knownledge">General Knowledge</option>
           </select>
         </div>
         <form onSubmit={handleSubmit} className="quiz-form">
