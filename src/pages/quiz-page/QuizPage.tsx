@@ -100,7 +100,12 @@ function QuizPage() {
         <form onSubmit={handleSubmit} className="quiz-form">
           <div className="form-input">
             <label htmlFor="question">Question</label>
-            <input type="text" required id="question" name="question" />
+
+            <textarea
+              required
+              id="question"
+              name="question"
+              rows={6}></textarea>
           </div>
           <div className="form-input">
             <label htmlFor="option" className="items">
