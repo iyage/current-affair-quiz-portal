@@ -99,12 +99,11 @@ function QuizPage() {
         </div>
         <form onSubmit={handleSubmit} className="quiz-form">
           <div className="form-input">
-            <label htmlFor="question">Question</label>
-
             <textarea
               required
               id="question"
               name="question"
+              placeholder="question"
               rows={6}></textarea>
           </div>
           <div className="form-input">
