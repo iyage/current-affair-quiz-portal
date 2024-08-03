@@ -37,3 +37,16 @@ table thead tr {
   cursor: pointer;
   color: crimson;
 }
+.table-footer {
+  display: flex;
+  justify-content: end;
+}
+.footer-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+.footer-wrapper button {
+  padding: 5px 10px;
+}

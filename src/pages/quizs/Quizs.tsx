@@ -1,17 +1,27 @@
-import { FaEdit, FaTrash } from "react-icons/fa";
+import {
+  FaChevronCircleLeft,
+  FaChevronCircleRight,
+  FaEdit,
+  FaTrash,
+} from "react-icons/fa";
 import "./quizs.css";
 import { useQuery } from "react-query";
-import { UserInfoStore } from "../../utils/store";
+import { QUIZ, UserInfoStore } from "../../utils/store";
 import { AxiosError, AxiosResponse } from "axios";
 import { delQuiiz, getQuizs } from "../../utils/api";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+const pageLimit = 10;
 function Quizs() {
+  const [tabArr, setTabArr] = useState<QUIZ[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
   const quizs = UserInfoStore.useState((s) => s.quizs);
   const token = UserInfoStore.useState((s) => s.token);
   const { isLoading } = useQuery({
     queryKey: ["quizs"],
     queryFn: () => getQuizs(token),
-    refetchOnMount: true,
+    refetchOnMount: false,
     refetchOnWindowFocus: false,
     onSuccess: (data: AxiosResponse) => {
       const resp = data.data;
@@ -45,6 +55,20 @@ function Quizs() {
       }
     }
   }
+
+  function handleNext() {
+    setCurrentPage((prev) => prev + 1);
+  }
+
+  function handlePrev() {
+    setCurrentPage((prev) => prev - 1);
+  }
+
+  useEffect(() => {
+    const offSet = pageLimit * currentPage - pageLimit;
+    setTabArr(quizs.slice(offSet, pageLimit + offSet));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPage]);
   return (
     <div className="quizs-container">
       {isLoading}
@@ -62,7 +86,7 @@ function Quizs() {
             </tr>
           </thead>
           <tbody>
-            {quizs.map((quiz, index) => {
+            {tabArr.map((quiz, index) => {
               return (
                 <tr key={quiz.id}>
                   <td>{index + 1}</td>
@@ -86,6 +110,22 @@ function Quizs() {
               );
             })}
           </tbody>
+          <tfoot>
+            <tr>
+              <td colSpan={6}>
+                <div className="table-footer">
+                  <div className="footer-wrapper">
+                    <button>
+                      <FaChevronCircleLeft onClick={handlePrev} />
+                    </button>{" "}
+                    <button onClick={handleNext}>
+                      <FaChevronCircleRight />
+                    </button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tfoot>
         </table>
       </div>
     </div>

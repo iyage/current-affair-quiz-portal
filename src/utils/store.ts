@@ -12,6 +12,7 @@ export interface QUIZ {
   answer: number;
   category: string;
   country: string;
+  solution: string;
 }
 
 export const UserInfoStore = new Store({
